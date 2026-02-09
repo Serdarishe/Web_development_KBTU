@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify</title>
+    <link rel="stylesheet" href="styleslab2.css" class="stylesheet">
+</head>
+<body>
+    <main class = "page">
+        <section class = "card">
+            <div class="logo">Spotify</div>
+
+            <h1 id="title" class="title">Sign up for free</h1>
+            <p class="subtitle">Create your account to start listening</p>
+            <form action="#" class="form" method = "post">
+                <div class="field">
+                    <label for="email" class="label">Email address</label>
+                    <input type="email" class="input" id="email" name="email" placeholder="name@kbtu.kz" required/>
+                    <p class="hint">We'll never share your email with anyone</p>
+                </div>
+                <div class="field">
+                    <label for="password" class="label">Password</label>
+                    <input type="password" class="input" id="password" name="password" placeholder="Create a password" required/>
+                    <p class="hint">Use 8+ characters for better security</p>
+                </div>
+            <div class="field">
+                    <label for="username" class="label">Username</label>
+                    <input type="username" class="input" id="username" name="username" placeholder="Pick a display name" minlength="3" required/>
+               
+            </div>
+             <div class="terms">
+                    <input type="checkbox" class="checkbox" id="terms" name="terms" required>
+                    <label for="terms" class="terms-label">
+                        I agree to the <a href="https://www.spotify.com/kz-ru/legal/end-user-agreement/" class="link">Terms and Conditions</a>
+                    </label>
+                </div>
+                <button class="button" type="submit">Sign up</button>
+                <p class="bottom">
+                    Already have an account?
+                    <a href="#" class="link">Log in</a>
+                </p>
+            </form>
+
+        </section>
+    </main>
+</body>
+</html>

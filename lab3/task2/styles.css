@@ -1,0 +1,78 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  margin: 0;
+}
+
+.container {
+  width: 80%;
+  max-width: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 80%;
+  padding: 8px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  align-items: left;
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Выравнивание по левому краю */
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+li.done {
+  text-decoration: line-through;
+  color: #888;
+}
+
+button.delete {
+  background-color: #dc3545;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  margin-left: 50px; /* Add some space between text and delete button */
+}
+
+button.delete:hover {
+  background-color: #c82333;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px; /* Add space between checkbox and text */
+}
