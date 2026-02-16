@@ -1,52 +1,113 @@
-const addBtn = document.getElementById('add-btn');
-const taskInput = document.getElementById('task-input');
-const taskList = document.getElementById('task-list');
+const taskForm   = document.getElementById('task-form');
+const taskInput  = document.getElementById('task-input');
+const taskList   = document.getElementById('task-list');
+const filterBtns = document.querySelectorAll('.filter-btn');
 
-document.addEventListener('DOMContentLoaded', loadTasks);
+let currentFilter = 'all';
 
-addBtn.addEventListener('click', () => {
-  const taskText = taskInput.value.trim();
-  if (taskText === '') return;
+document.addEventListener('DOMContentLoaded', () => {
+  loadTasks();
+  applyFilter(currentFilter);
+  updateCounter();
+});
 
-  const task = { text: taskText, done: false };
+taskForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const text = taskInput.value.trim();
+  if (text === '') return;
 
+  const task = { text, done: false };
   addTaskToUI(task);
   saveTaskToLocalStorage(task);
 
-  taskInput.value = ''; 
+  taskInput.value = '';
+  applyFilter(currentFilter);
+  updateCounter();
 });
 
+
 taskList.addEventListener('click', (e) => {
-  const taskItem = e.target.closest('li');
+  const li = e.target.closest('li');
+  if (!li) return;
 
-  if (e.target.tagName === 'INPUT' && taskItem) {
+  if (e.target.classList.contains('delete-btn')) {
+    deleteTaskFromLocalStorage(li);
+    li.remove();
+    updateCounter();
+    return;
+  }
 
-    toggleTaskStatus(taskItem);
-    updateTaskStatusInLocalStorage(taskItem);
-  } else if (e.target.classList.contains('delete')) {
-  
-    taskItem.remove();
-    deleteTaskFromLocalStorage(taskItem);
+  if (e.target.type === 'checkbox') {
+    const isChecked = e.target.checked;
+    li.classList.toggle('is-completed', isChecked);
+    li.querySelector('.todo-text').classList.toggle('is-completed', isChecked);
+    updateTaskInLocalStorage(li);
+    applyFilter(currentFilter);
   }
 });
 
-function addTaskToUI(task) {
-  const li = document.createElement('li');
-  li.classList.toggle('done', task.done);
-  li.innerHTML = `
-    <input type="checkbox" ${task.done ? 'checked' : ''}>
-    <span>${task.text}</span>
-    <button class="delete">Delete</button>
-  `;
-  taskList.appendChild(li);
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    applyFilter(currentFilter);
+    
+    updateCounter();
+  });
+});
+
+
+function applyFilter(filter) {
+  const items = taskList.querySelectorAll('li');
+  items.forEach(item => {
+    const isCompleted = item.classList.contains('is-completed');
+    let shouldShow = false;
+    if (filter === 'all')       shouldShow = true;
+    if (filter === 'active')    shouldShow = !isCompleted;
+    if (filter === 'completed') shouldShow = isCompleted;
+    item.classList.toggle('is-hidden', !shouldShow);
+  });
 }
 
+
+function createTaskElement(task) {
+  const li = document.createElement('li');
+  if (task.done) li.classList.add('is-completed');
+
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.checked = task.done;
+
+  const span = document.createElement('span');
+  span.classList.add('todo-text');
+  if (task.done) span.classList.add('is-completed');
+  span.textContent = task.text;
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.classList.add('delete-btn');
+  deleteBtn.textContent = '✕';
+
+  li.appendChild(checkbox);
+  li.appendChild(span);
+  li.appendChild(deleteBtn);
+
+  return li;
+}
+
+
+function addTaskToUI(task) {
+  taskList.appendChild(createTaskElement(task));
+}
 
 function loadTasks() {
-  const tasks = getTasksFromLocalStorage();
-  tasks.forEach(addTaskToUI);
+  getTasksFromLocalStorage().forEach(addTaskToUI);
 }
 
+function getTasksFromLocalStorage() {
+  return JSON.parse(localStorage.getItem('tasks')) || [];
+}
 
 function saveTaskToLocalStorage(task) {
   const tasks = getTasksFromLocalStorage();
@@ -54,30 +115,22 @@ function saveTaskToLocalStorage(task) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-function getTasksFromLocalStorage() {
-  return JSON.parse(localStorage.getItem('tasks')) || [];
-}
-
-function toggleTaskStatus(taskItem) {
-  taskItem.classList.toggle('done');
-  const taskText = taskItem.querySelector('span').textContent;
+function updateTaskInLocalStorage(li) {
+  const text = li.querySelector('.todo-text').textContent;
+  const done = li.classList.contains('is-completed');
   const tasks = getTasksFromLocalStorage();
-  const task = tasks.find(t => t.text === taskText);
-  if (task) task.done = !task.done;
+  const task = tasks.find(t => t.text === text);
+  if (task) task.done = done;
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-function updateTaskStatusInLocalStorage(taskItem) {
-  const taskText = taskItem.querySelector('span').textContent;
-  const tasks = getTasksFromLocalStorage();
-  const task = tasks.find(t => t.text === taskText);
-  if (task) task.done = !task.done;
+function deleteTaskFromLocalStorage(li) {
+  const text = li.querySelector('.todo-text').textContent;
+  const tasks = getTasksFromLocalStorage().filter(t => t.text !== text);
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-function deleteTaskFromLocalStorage(taskItem) {
-  const taskText = taskItem.querySelector('span').textContent;
-  const tasks = getTasksFromLocalStorage();
-  const filteredTasks = tasks.filter(t => t.text !== taskText);
-  localStorage.setItem('tasks', JSON.stringify(filteredTasks));
+function updateCounter() {
+  const total = taskList.querySelectorAll('li').length;
+  document.getElementById('task-counter').textContent = `${total} task${total !== 1 ? 's' : ''} left`;
 }

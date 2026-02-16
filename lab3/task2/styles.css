@@ -1,78 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 50vh;
-  margin: 0;
+  align-items: flex-start;
+  padding: 50px 16px;
 }
 
 .container {
-  width: 80%;
-  max-width: 600px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 
 header {
+  background: linear-gradient(135deg, #ffffff 0%, #e8dbf6 100%);
+  padding: 28px 28px 24px;
+}
+
+header h1 {
+  color: #000000;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.form-section {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.form-section label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+}
+
+.input-row {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  gap: 8px;
 }
 
-input {
-  width: 80%;
-  padding: 8px;
-  margin-right: 10px;
+.input-row input[type="text"] {
+  flex: 1;
+  padding: 11px 14px;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  color: #1a1a1a;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fafafa;
 }
 
-button {
-  padding: 8px 12px;
-  background-color: #007BFF;
-  color: white;
+.input-row input[type="text"]:focus {
+  border-color: #dee4ff;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+}
+
+.input-row input[type="text"]::placeholder {
+  color: #bbb;
+}
+
+.input-row button {
+  padding: 11px 20px;
+  background: linear-gradient(135deg, #667eea, #67b7fe);
+  color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  white-space: nowrap;
 }
 
-button:hover {
-  background-color: #0056b3;
+.input-row button:hover { opacity: 0.9; }
+.input-row button:active { transform: scale(0.97); }
+
+.filter-section {
+  display: flex;
+  gap: 6px;
+  padding: 14px 24px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.filter-btn {
+  padding: 7px 16px;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 20px;
+  background: #fff;
+  color: #888;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #2d54ff, #52a6ff);
+  border-color: transparent;
+  color: #fff;
+}
+
+.list-section {
+  padding: 8px 0 12px;
+  min-height: 60px;
 }
 
 ul {
-  align-items: left;
   list-style: none;
-  padding: 0;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
 }
 
 li {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Выравнивание по левому краю */
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  gap: 12px;
+  padding: 13px 16px;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  transition: background 0.15s, box-shadow 0.15s;
 }
 
-li.done {
-  text-decoration: line-through;
-  color: #888;
+li:hover {
+  background: #f5f4ff;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+  border-color: #e0dcff;
 }
 
-button.delete {
-  background-color: #dc3545;
-  border: none;
-  padding: 5px;
+li.is-hidden {
+  display: none;
+}
+
+li input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
   cursor: pointer;
-  margin-left: 50px; /* Add some space between text and delete button */
+  accent-color: #667eea;
+  flex-shrink: 0;
 }
 
-button.delete:hover {
-  background-color: #c82333;
+.todo-text {
+  flex: 1;
+  font-size: 14px;
+  color: #1a1a1a;
+  word-break: break-word;
+  line-height: 1.4;
 }
 
-input[type="checkbox"] {
-  margin-right: 10px; /* Add space between checkbox and text */
+.todo-text.is-completed {
+  text-decoration: line-through;
+  color: #bbb;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #ddd;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.delete-btn:hover {
+  color: #e53e3e;
+  background: #fff0f0;
+}
+
+.task-counter {
+  padding: 12px 24px;
+  font-size: 13px;
+  color: #999;
+  border-top: 1px solid #f0f0f0;
+  text-align: left;
 }
