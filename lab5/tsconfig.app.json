@@ -8,6 +8,13 @@
     "src/main.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "**/*.ts",
+    "**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "out-tsc",
+    "src/test.ts",
+    "**/*.spec.ts"
   ]
 }
