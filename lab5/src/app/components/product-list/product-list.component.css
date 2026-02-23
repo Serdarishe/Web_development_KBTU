@@ -1,0 +1,17 @@
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+}
+.no-results-icon { font-size: 56px; margin-bottom: 16px; }
+.no-results-text { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 8px; }
+.no-results-sub { color: #888; font-size: 14px; }

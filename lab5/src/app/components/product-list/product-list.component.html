@@ -1,0 +1,16 @@
+@if (products.length > 0) {
+  <div class="products-grid">
+    @for (product of products; track product.id) {
+      <app-product-card
+        [product]="product"
+        (deleteProduct)="onDelete($event)"
+      ></app-product-card>
+    }
+  </div>
+} @else {
+  <div class="no-results">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaWsSzat-NO-bDdKdXGYJe1hED-wOK1U_UAg&s" alt="">
+    <p class="no-results-text">Товары не найдены</p>
+    <p class="no-results-sub">Попробуйте изменить параметры фильтра</p>
+  </div>
+}

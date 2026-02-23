@@ -7,14 +7,33 @@
   <title>ToDo List</title>
 </head>
 <body>
+
   <div class="container">
     <header>
       <h1>ToDo List</h1>
-      <input type="text" id="task-input" placeholder="New Task">
-      <button id="add-btn">Add</button>
     </header>
+
     <main>
-      <ul id="task-list"></ul>
+      <section class="form-section">
+        <form id="task-form">
+          <label for="task-input">Add a new task</label>
+          <div class="input-row">
+            <input type="text" id="task-input" placeholder="What needs to be done?" autocomplete="off" />
+            <button type="submit">Add</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="filter-section">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+      </section>
+
+      <section class="list-section">
+        <ul id="task-list"></ul>
+      </section>
+      <div class="task-counter" id="task-counter">0 tasks left</div>
     </main>
   </div>
 
