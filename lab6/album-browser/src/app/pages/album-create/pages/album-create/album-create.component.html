@@ -1,0 +1,21 @@
+<div class="page">
+  <a routerLink="/albums" class="btn">← Back to Albums</a>
+
+  <h2>New Album</h2>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <label>
+    Title
+    <input [(ngModel)]="title" />
+  </label>
+
+  <label>
+    User ID
+    <input type="number" [(ngModel)]="userId" />
+  </label>
+
+  <button class="btn primary" (click)="create()" [disabled]="loading">
+    {{ loading ? 'Creating...' : 'Create' }}
+  </button>
+</div>

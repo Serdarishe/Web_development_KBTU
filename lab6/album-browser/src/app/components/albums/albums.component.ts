@@ -1,33 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AlbumService } from '../../services/album.service';
+import { Observable } from 'rxjs';
 import { Album } from '../../models/album.model';
 
 @Component({
   selector: 'app-albums',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './albums.component.html',
-  styleUrl: './albums.component.css'
+  styleUrls: ['./albums.component.css']
 })
 export class AlbumsComponent implements OnInit {
-  albums: Album[] = [];
+  albums$: Observable<Album[] | null>;
   loading = true;
-  error = '';
 
-  constructor(private albumService: AlbumService, private router: Router) {}
+  constructor(private albumService: AlbumService, private router: Router) {
+    this.albums$ = this.albumService.albums$;
+  }
 
   ngOnInit(): void {
-    this.albumService.getAlbums().subscribe({
-      next: (data) => {
-        this.albums = data;
-        this.loading = false;
-      },
-      error: () => {
-        this.error = 'Failed to load albums.';
-        this.loading = false;
-      }
+    this.albumService.loadAlbums();
+    this.albums$.subscribe(data => {
+      if (data !== null) this.loading = false;
     });
   }
 
@@ -37,11 +33,6 @@ export class AlbumsComponent implements OnInit {
 
   deleteAlbum(id: number, event: Event): void {
     event.stopPropagation();
-    this.albumService.deleteAlbum(id).subscribe({
-      next: () => {
-        this.albums = this.albums.filter(a => a.id !== id);
-      },
-      error: () => alert('Failed to delete album.')
-    });
+    this.albumService.deleteAlbum(id).subscribe();
   }
 }
